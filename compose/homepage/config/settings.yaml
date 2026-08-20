@@ -1,0 +1,25 @@
+title: Jack's Home Server
+
+theme: dark
+color: slate
+
+headerStyle: clean
+statusStyle: dot
+showStats: true
+useEqualHeights: true
+
+layout:
+  Infrastructure:
+    style: column
+
+  Media:
+    style: column
+
+  Personal:
+    style: column
+
+  Gaming:
+    style: column
+
+  Monitoring:
+    style: column

@@ -1,0 +1,124 @@
+services:
+  dawarich_redis:
+    image: redis:7.4-alpine
+    container_name: dawarich_redis
+    command: >-
+      redis-server --save 900 1 --save 300 10 --appendonly no
+    restart: unless-stopped
+    networks:
+      - dawarich
+    volumes:
+      - dawarich_shared:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  dawarich_db:
+    # The upstream ARM64 guidance uses this PostGIS-compatible image.
+    image: imresamu/postgis:17-3.5-alpine
+    container_name: dawarich_db
+    shm_size: 1G
+    restart: unless-stopped
+    networks:
+      - dawarich
+    volumes:
+      - dawarich_db_data:/var/lib/postgresql/data
+      - dawarich_shared:/var/shared
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  dawarich_app:
+    image: freikin/dawarich:1.10.3
+    container_name: dawarich_app
+    entrypoint: web-entrypoint.sh
+    command: ["bin/rails", "server", "-p", "3000", "-b", "${CONTAINER_BIND_HOST:?set CONTAINER_BIND_HOST in .env.dawarich}"]
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - dawarich
+    ports:
+      - "${LOOPBACK_BIND_IP:?set LOOPBACK_BIND_IP in .env.dawarich}:3002:3000"
+    volumes:
+      - dawarich_public:/var/app/public
+      - dawarich_watched:/var/app/tmp/imports/watched
+      - dawarich_storage:/var/app/storage
+      - dawarich_db_data:/dawarich_db_data
+    env_file:
+      - .env.dawarich
+    environment:
+      DATABASE_HOST: dawarich_db
+      DATABASE_PORT: "5432"
+      REDIS_URL: redis://dawarich_redis:6379
+      RAILS_LOG_TO_STDOUT: "true"
+      SELF_HOSTED: "true"
+      STORE_GEODATA: "true"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO - http://localhost:3000/api/v1/health | grep -q '\"status\"\\s*:\\s*\"ok\"'"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 60s
+    depends_on:
+      dawarich_db:
+        condition: service_healthy
+      dawarich_redis:
+        condition: service_healthy
+
+  dawarich_sidekiq:
+    image: freikin/dawarich:1.10.3
+    container_name: dawarich_sidekiq
+    entrypoint: sidekiq-entrypoint.sh
+    command: ["sidekiq"]
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - dawarich
+    volumes:
+      - dawarich_public:/var/app/public
+      - dawarich_watched:/var/app/tmp/imports/watched
+      - dawarich_storage:/var/app/storage
+    env_file:
+      - .env.dawarich
+    environment:
+      DATABASE_HOST: dawarich_db
+      DATABASE_PORT: "5432"
+      REDIS_URL: redis://dawarich_redis:6379
+      RAILS_LOG_TO_STDOUT: "true"
+      SELF_HOSTED: "true"
+      STORE_GEODATA: "true"
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f sidekiq"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 60s
+    depends_on:
+      dawarich_db:
+        condition: service_healthy
+      dawarich_redis:
+        condition: service_healthy
+      dawarich_app:
+        condition: service_healthy
+
+networks:
+  dawarich:
+
+volumes:
+  dawarich_db_data:
+  dawarich_shared:
+  dawarich_public:
+  dawarich_watched:
+  dawarich_storage:

@@ -1,0 +1,52 @@
+services:
+  bluemap:
+    image: ghcr.io/bluemap-minecraft/bluemap:v5.20@sha256:97aa05f0ef959fbba30383f9591036959b45fa6c9875259214b6bda23a89f878
+    container_name: bluemap
+    command: -w
+    ports:
+      - "${LOOPBACK_BIND_IP:?set LOOPBACK_BIND_IP in .env}:8100:8100"
+    volumes:
+      - ../../bluemap/config:/app/config:ro
+      - ../../bluemap/data:/app/data
+      - ../../bluemap/web:/app/web
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - grep -q ':1FA4 .* 0A ' /proc/net/tcp /proc/net/tcp6
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  bluemap-render:
+    image: ghcr.io/bluemap-minecraft/bluemap:v5.20@sha256:97aa05f0ef959fbba30383f9591036959b45fa6c9875259214b6bda23a89f878
+    entrypoint:
+      - java
+      - -Xms256m
+      - -Xmx1g
+      - -XX:+ExitOnOutOfMemoryError
+      - -jar
+      - cli.jar
+    profiles:
+      - render
+    command:
+      - -r
+      - -m
+      - overworld
+      - -n
+      - /app/server/mods
+      - -v
+      - 1.21.1
+    volumes:
+      - ../../bluemap/config:/app/config:ro
+      - ../../bluemap/data:/app/data
+      - ../../bluemap/web:/app/web
+      - ../../minecraft/briancraft-ii:/app/server:ro
+    mem_limit: 2g
+    cpus: 2
+    security_opt:
+      - no-new-privileges:true
+    restart: "no"

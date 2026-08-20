@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.jack.jellyfin</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Applications/Jellyfin.app/Contents/MacOS/Jellyfin Server</string>
+  </array>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>TZ</key>
+    <string>America/New_York</string>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>ThrottleInterval</key>
+  <integer>10</integer>
+  <key>ProcessType</key>
+  <string>Background</string>
+
+  <key>StandardOutPath</key>
+  <string>/Users/jack/Server/data/jellyfin-launchd.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/jack/Server/data/jellyfin-launchd.log</string>
+</dict>
+</plist>

@@ -1,0 +1,14 @@
+[Unit]
+Description=Reconcile Briancraft II every five minutes and at schedule boundaries
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=5min
+OnCalendar=*-*-* 00:00:00
+OnCalendar=Mon..Fri *-*-* 17:00:00
+OnCalendar=Sat,Sun *-*-* 07:30:00
+AccuracySec=10s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

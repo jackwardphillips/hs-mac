@@ -1,0 +1,16 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:2.39.5@sha256:f6bc23d1695530a609563fd65c180aaafec0fc02e019d5fc63d16b6fbe83addd
+    container_name: portainer
+
+    restart: unless-stopped
+
+    ports:
+      - "${LOOPBACK_BIND_IP:?set LOOPBACK_BIND_IP in .env}:9443:9443"
+
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  portainer_data:

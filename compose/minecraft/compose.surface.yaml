@@ -1,0 +1,5 @@
+services:
+  minecraft:
+    environment:
+      INIT_MEMORY: 2G
+      MAX_MEMORY: 6G

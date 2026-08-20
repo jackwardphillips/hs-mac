@@ -1,0 +1,43 @@
+:root { color-scheme:dark; --sky:#79b7e7; --dirt:#79553a; --dirt-dark:#4b3527; --stone:#777; --stone-dark:#373737; --slot:#252525; --text:#fff; --muted:#bdbdbd; --green:#55aa33; --lime:#80d34f; --gold:#ffdd55; --red:#ff5555; }
+* { box-sizing:border-box; }
+body { margin:0; min-height:100vh; background-color:#6b4931; background-image:linear-gradient(rgba(20,12,7,.18),rgba(20,12,7,.18)),url("/minecraft/dirt.png"); background-size:auto,64px 64px; color:var(--text); font:15px/1.45 ui-monospace,"SFMono-Regular",Consolas,monospace; image-rendering:pixelated; }
+.sky { height:15px; position:fixed; inset:0 0 auto; z-index:5; background:var(--green); border-bottom:5px solid var(--dirt); box-shadow:0 5px 0 var(--dirt-dark); }
+.sky i { position:absolute; width:5px; height:5px; background:#386e2c; top:10px; }
+.sky i:nth-child(1){left:12%}.sky i:nth-child(2){left:48%}.sky i:nth-child(3){left:79%}
+main { width:min(1600px,calc(100% - 32px)); margin:auto; padding:58px 0 56px; }
+header { display:flex; justify-content:space-between; align-items:end; gap:24px; margin-bottom:28px; }
+.eyebrow { margin:0 0 6px; color:var(--lime); font-weight:800; letter-spacing:.16em; text-transform:uppercase; text-shadow:2px 2px #183b12; }
+h1 { margin:0; font-family:Impact,Haettenschweiler,"Arial Narrow Bold",sans-serif; font-size:clamp(2.5rem,7vw,5rem); line-height:.9; letter-spacing:.015em; text-transform:uppercase; color:#aaa; text-shadow:3px 3px 0 #333,-1px -1px 0 #eee; }
+h1 span { color:#ddd; }
+.sort-control { display:grid; gap:6px; min-width:190px; color:var(--muted); font-size:.76rem; letter-spacing:.08em; text-transform:uppercase; }
+select { width:100%; border:2px solid; border-color:#aaa #333 #333 #aaa; border-radius:0; padding:9px 34px 9px 12px; background:#555; color:#fff; font:inherit; text-transform:none; letter-spacing:0; box-shadow:2px 2px 0 #090909; cursor:pointer; }
+select:focus { outline:2px solid #fff; outline-offset:2px; }
+footer { color:var(--muted); }
+.player { border:3px solid; border-color:#c8c8c8 #363636 #363636 #c8c8c8; background-color:#777; background-image:linear-gradient(rgba(28,28,28,.18),rgba(28,28,28,.18)),url("/minecraft/stone.png"); background-size:auto,64px 64px; box-shadow:4px 4px 0 #090909; }
+.stat span,.cause-title { display:block; color:var(--muted); font-size:.76rem; letter-spacing:.08em; text-transform:uppercase; }
+.players { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.player { padding:18px; }
+.player-head { display:flex; justify-content:space-between; gap:16px; align-items:start; }
+.identity { display:flex; align-items:center; gap:11px; min-width:0; }
+.avatar { display:grid; place-items:center; position:relative; overflow:hidden; flex:0 0 48px; width:48px; height:48px; border:3px solid; border-color:#ddd #333 #333 #ddd; background:#171717; color:#fff; font-weight:900; font-size:1.2rem; text-shadow:2px 2px #38261b; box-shadow:2px 2px #111; }
+.skin-face,.skin-hat { position:absolute; inset:0; background-image:var(--skin); background-repeat:no-repeat; background-size:336px auto; image-rendering:pixelated; }
+.skin-face { background-position:-42px -42px; }
+.skin-hat { background-position:-210px -42px; }
+.rank { color:var(--lime); font-weight:800; margin-right:8px; text-shadow:2px 2px #183b12; }
+h2 { margin:0; font-size:1.45rem; }
+.primary { text-align:right; }
+.primary strong { display:block; color:var(--gold); font-size:1.35rem; text-shadow:2px 2px #4b3f00; }
+.primary span { color:var(--muted); font-size:.78rem; text-transform:uppercase; }
+.stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:18px 0; }
+.stat { min-width:0; padding:9px; background:var(--slot); border:2px solid; border-color:#111 #888 #888 #111; }
+.stat strong { display:block; margin-top:3px; overflow:hidden; text-overflow:ellipsis; }
+.causes { border-top:2px solid #333; padding-top:14px; }
+.cause-list { display:flex; flex-wrap:wrap; gap:7px; margin-top:9px; }
+.cause { padding:5px 8px; background:#292929; border:1px solid #888; font-size:.82rem; }
+.cause b { color:var(--red); }
+.error { padding:20px; border:3px solid #8e3d3d; background:#321b1b; }
+footer { margin-top:24px; font-size:.82rem; }
+.torch { color:#ffb52b; text-shadow:0 0 7px #ff7a00; }
+@media (max-width:1000px) { .players { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:650px) { .players { grid-template-columns:1fr; } }
+@media (max-width:500px) { main { width:calc(100% - 20px); padding-top:24px; } header { display:block; } .sort-control { margin-top:18px; } .stats { grid-template-columns:repeat(2,1fr); } }

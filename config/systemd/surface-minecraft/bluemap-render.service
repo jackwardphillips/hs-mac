@@ -1,0 +1,13 @@
+[Unit]
+Description=Render Briancraft II BlueMap after scheduled shutdown
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+User=jack
+Group=jack
+ExecStart=/home/jack/services/minecraft/scripts/render-bluemap.sh --if-player-active
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7

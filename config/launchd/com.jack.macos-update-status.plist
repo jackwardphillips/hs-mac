@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.jack.macos-update-status</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/jack/Server/scripts/system/check-macos-updates.sh</string>
+  </array>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StartInterval</key>
+  <integer>21600</integer>
+
+  <key>StandardOutPath</key>
+  <string>/Users/jack/Server/data/system-update/launchd.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/jack/Server/data/system-update/launchd.log</string>
+</dict>
+</plist>
+

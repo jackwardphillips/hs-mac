@@ -1,0 +1,4 @@
+services:
+  dawarich_app:
+    ports: !override
+      - "${TAILSCALE_BIND_IP:?set TAILSCALE_BIND_IP in .env.dawarich}:3002:3000"

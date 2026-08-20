@@ -1,0 +1,32 @@
+/* Present services as compact app icons while retaining their configuration. */
+ul.services-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 4.25rem);
+  gap: 0.5rem;
+  justify-content: start;
+}
+
+li.service .service-card {
+  aspect-ratio: 1;
+  margin: 0;
+  padding: 0;
+}
+
+li.service .service-title,
+li.service .service-icon {
+  width: 100%;
+  height: 100%;
+}
+
+li.service .service-icon img,
+li.service .service-icon > div {
+  width: 2.25rem !important;
+  height: 2.25rem !important;
+}
+
+li.service .service-title-text,
+li.service .service-tags,
+li.service .service-stats,
+li.service .service-card > .service-container {
+  display: none;
+}

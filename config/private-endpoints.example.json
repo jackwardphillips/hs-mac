@@ -1,0 +1,4 @@
+{
+  "observatoryBaseUrl": "http://your-observatory-host.example:8000",
+  "minecraftSupportBaseUrl": "http://your-minecraft-dashboard.example:3003"
+}

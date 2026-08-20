@@ -1,0 +1,20 @@
+services:
+  beszel:
+    image: ghcr.io/henrygd/beszel/beszel:0.18.7@sha256:5b583633750cae65a9c1ab399c4c0eed229666ad74e103801724e3bc465338b8
+    container_name: beszel
+    restart: unless-stopped
+    environment:
+      APP_URL: ${BESZEL_APP_URL:?set BESZEL_APP_URL in .env}
+    ports:
+      - "${LOOPBACK_BIND_IP:?set LOOPBACK_BIND_IP in .env}:8090:8090"
+    volumes:
+      - beszel_data:/beszel_data
+    healthcheck:
+      test: ["CMD", "/beszel", "health", "--url", "http://localhost:8090"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  beszel_data:

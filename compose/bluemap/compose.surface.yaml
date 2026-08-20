@@ -1,0 +1,4 @@
+services:
+  bluemap:
+    ports: !override
+      - "${TAILSCALE_BIND_IP:?set TAILSCALE_BIND_IP in .env}:8100:8100"

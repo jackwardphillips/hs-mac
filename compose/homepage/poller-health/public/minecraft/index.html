@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Briancraft II — Player Stats</title>
+  <link rel="stylesheet" href="/minecraft/styles.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+  <main>
+    <header>
+      <div><p class="eyebrow">Briancraft II</p><h1><span>Player</span> Stats</h1></div>
+      <label class="sort-control" for="sort"><span>Sort players</span><select id="sort" disabled><option>Loading…</option></select></label>
+    </header>
+    <section id="players" class="players" aria-live="polite"></section>
+    <p id="error" class="error" hidden></p>
+    <footer><span class="torch">◆</span> Read directly from the saved world. Environmental deaths include falls, lava, and other causes without a recorded killer.</footer>
+  </main>
+  <script type="module" src="/minecraft/app.js"></script>
+</body>
+</html>

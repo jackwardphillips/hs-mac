@@ -1,0 +1,14 @@
+[Unit]
+Description=Briancraft II Discord join watcher
+After=docker.service
+
+[Service]
+Type=simple
+User=jack
+Group=jack
+ExecStart=/home/jack/services/minecraft/scripts/notify-discord-minecraft-join.sh
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

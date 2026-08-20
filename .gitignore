@@ -1,0 +1,47 @@
+# macOS
+.DS_Store
+
+# Secrets
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.key
+*.pem
+secrets/
+**/secrets/
+
+# Runtime data
+data/
+media/
+photos/
+backups/
+/minecraft/
+/power-monitor/
+
+# Service databases and generated files
+**/database/
+**/db/
+**/cache/
+**/logs/
+**/tmp/
+
+# Homepage-generated logs
+compose/homepage/config/logs/
+compose/homepage/config/services.yaml
+
+# Server-local Twitcher image rollback selection
+config/twitcher-poller-image.override
+config/private-endpoints.json
+
+# BlueMap-generated render state and web assets
+/bluemap/data/
+/bluemap/config/generated/
+/bluemap/web/
+/bluemap/*.log
+/bluemap/.render.lock
+/bluemap/status/
+
+# Independently versioned application repositories
+apps/twitcher/
+apps/the-observatory/

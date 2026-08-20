@@ -1,0 +1,111 @@
+- Infrastructure:
+    - Homepage:
+        icon: homepage.png
+        href: "{{HOMEPAGE_VAR_MAC_BASE_URL}}:3000"
+        description: Home server dashboard
+        server: local-docker
+        container: homepage
+        showStats: true
+
+    - Portainer:
+        icon: portainer.png
+        href: "{{HOMEPAGE_VAR_MAC_BASE_URL}}"
+        description: Docker management
+        server: local-docker
+        container: portainer
+        showStats: true
+
+    - Beszel:
+        icon: beszel.png
+        href: "{{HOMEPAGE_VAR_MAC_BASE_URL}}:8090"
+        description: Compact server monitoring
+        server: local-docker
+        container: beszel
+        showStats: true
+
+    - Uptime Kuma:
+        icon: uptime-kuma.png
+        href: "{{HOMEPAGE_VAR_SURFACE_BASE_URL}}:3001"
+        description: Fleet availability monitoring
+
+    - Netdata:
+        icon: netdata.png
+        href: "{{HOMEPAGE_VAR_MAC_BASE_URL}}:19999"
+        description: Detailed host monitoring
+
+- Media:
+    - Jellyfin:
+        icon: jellyfin.png
+        href: http://jack-server.local:8096
+        description: Local media server
+
+- Personal:
+    - Dawarich:
+        icon: "{{HOMEPAGE_VAR_SURFACE_BASE_URL}}:3002/icon.svg"
+        href: "{{HOMEPAGE_VAR_SURFACE_BASE_URL}}:3002"
+        description: Personal location history
+
+    - Immich:
+        icon: immich.png
+        href: "{{HOMEPAGE_VAR_MAC_BASE_URL}}:2283"
+        description: Tailnet-only photo library
+        server: local-docker
+        container: immich_server
+        showStats: true
+
+- Monitoring:
+    - The Observatory:
+        icon: mdi-telescope
+        href: "{{HOMEPAGE_VAR_SURFACE_BASE_URL}}:8000"
+        description: Earthquake collection and local sky service
+        widget:
+          type: customapi
+          url: http://poller-health:3001/observatory
+          refreshInterval: 60000
+          mappings:
+            - field: status
+              label: Status
+            - field: lastCollection
+              label: Last collection
+            - field: fetched
+              label: Fetched
+            - field: changes
+              label: Changes
+
+    - Twitcher Ingestion:
+        icon: mdi-bird
+        href: https://twitcher-sigma.vercel.app
+        description: Scheduled eBird ingestion
+        widget:
+          type: customapi
+          url: http://poller-health:3001/summary
+          refreshInterval: 60000
+          mappings:
+            - field: status
+              label: Status
+            - field: lastRun
+              label: Last run
+            - field: threeDaySuccess
+              label: 3-day success
+            - field: ebirdCalls
+              label: eBird calls
+
+- Gaming:
+    - Briancraft II:
+        icon: minecraft.png
+        href: "{{HOMEPAGE_VAR_SURFACE_BASE_URL}}:3003/minecraft/"
+        description: Minecraft Server
+
+    - BlueMap:
+        icon: bluemap.png
+        href: "{{HOMEPAGE_VAR_SURFACE_BASE_URL}}:8100"
+        description: Briancraft II Server Map
+        widget:
+          type: customapi
+          url: "{{HOMEPAGE_VAR_SURFACE_BASE_URL}}:3003/bluemap"
+          refreshInterval: 60000
+          mappings:
+            - field: lastRun
+              label: Last run
+            - field: lastDuration
+              label: Duration

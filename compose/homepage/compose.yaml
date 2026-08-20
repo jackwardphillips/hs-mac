@@ -1,0 +1,76 @@
+services:
+  docker-proxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:latest@sha256:1f3a6f303320723d199d2316a3e82b2e2685d86c275d5e3deeaf182573b47476
+    container_name: homepage-docker-proxy
+    environment:
+      CONTAINERS: "1"
+      EVENTS: "0"
+      POST: "0"
+      LOG_LEVEL: warning
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - docker-api
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:2375/_ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:v1.13.2@sha256:a0b71c8e757298d02560186bab9fbe3fc2d375c523a62cc1019177b37e48aa28
+    container_name: homepage
+    ports:
+      - "${LOOPBACK_BIND_IP:?set LOOPBACK_BIND_IP in .env}:3000:3000"
+    volumes:
+      - ./config:/app/config
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS:?set HOMEPAGE_ALLOWED_HOSTS in .env}
+      HOMEPAGE_VAR_MAC_BASE_URL: ${HOMEPAGE_VAR_MAC_BASE_URL:?set HOMEPAGE_VAR_MAC_BASE_URL in .env}
+      HOMEPAGE_VAR_SURFACE_BASE_URL: ${HOMEPAGE_VAR_SURFACE_BASE_URL:?set HOMEPAGE_VAR_SURFACE_BASE_URL in .env}
+    restart: unless-stopped
+    depends_on:
+      docker-proxy:
+        condition: service_healthy
+      poller-health:
+        condition: service_healthy
+    networks:
+      - default
+      - docker-api
+
+  poller-health:
+    build:
+      context: ./poller-health
+    container_name: poller-health
+    user: "501:20"
+    expose:
+      - "3001"
+    ports:
+      - "${LOOPBACK_BIND_IP:?set LOOPBACK_BIND_IP in .env}:3001:3001"
+    volumes:
+      - ../../apps/twitcher/backend/poller-history.jsonl:/data/poller-history.jsonl:ro
+      - ../../data/system-update:/data/system-update:ro
+      - ../../bluemap/status:/data/bluemap:ro
+      - ../../data/observatory:/data/observatory:ro
+      - ../../minecraft/briancraft-ii/world/stats:/data/minecraft/stats:ro
+      - ../../minecraft/briancraft-ii/usercache.json:/data/minecraft/usercache.json:ro
+      - ../../minecraft/briancraft-ii/logs:/data/minecraft/logs:ro
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - fetch('http://localhost:3001/summary').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+networks:
+  docker-api:
+    internal: true

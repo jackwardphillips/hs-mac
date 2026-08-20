@@ -1,0 +1,27 @@
+services:
+  service-name:
+    image: organization/image:version
+    container_name: service-name
+
+    restart: unless-stopped
+
+    ports:
+      # Localhost only. Use Tailscale Serve when remote access is needed.
+      - "${LOOPBACK_BIND_IP:?set LOOPBACK_BIND_IP in .env}:HOST_PORT:CONTAINER_PORT"
+
+      # For intentional LAN access, replace the line above with:
+      # - "HOST_PORT:CONTAINER_PORT"
+
+    environment:
+      TZ: America/New_York
+
+    volumes:
+      - ./config:/config
+
+    # Uncomment when a service requires a health check.
+    # healthcheck:
+    #   test: ["CMD", "command", "used", "to", "check", "health"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 30s

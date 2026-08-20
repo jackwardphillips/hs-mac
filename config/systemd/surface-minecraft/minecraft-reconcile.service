@@ -1,0 +1,10 @@
+[Unit]
+Description=Reconcile Briancraft II scheduled state
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+User=jack
+Group=jack
+ExecStart=/home/jack/services/minecraft/scripts/reconcile-minecraft-schedule.sh
