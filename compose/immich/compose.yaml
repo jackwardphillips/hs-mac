@@ -5,7 +5,11 @@ services:
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
     volumes:
-      - ${UPLOAD_LOCATION}:/data
+      - type: bind
+        source: ${UPLOAD_LOCATION}
+        target: /data
+        bind:
+          create_host_path: false
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env.immich
