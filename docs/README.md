@@ -2,8 +2,8 @@
 
 Operations documentation is grouped by service:
 
-- [Minecraft](minecraft/README.md), including its
-  [service changelog](minecraft/CHANGELOG.md)
+- [Minecraft](minecraft/README.md), with its changelog maintained in
+  `waxwing:/home/jack/server/docs/changelogs/briancraft.md`
 - [BlueMap](minecraft/BLUEMAP.md)
 - [Twitcher poller](twitcher/README.md)
 - [Personal Observatory](observatory/README.md)
