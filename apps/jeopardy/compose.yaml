@@ -1,0 +1,19 @@
+services:
+  jeopardy:
+    build:
+      context: .
+    container_name: jeopardy
+    restart: unless-stopped
+    ports:
+      - "8088:8080"
+    environment:
+      TZ: America/New_York
+      CLUE_FILE: /data/clues.tsv
+    volumes:
+      - ../../data/jeopardy:/data:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

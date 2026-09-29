@@ -29,6 +29,7 @@ Desktop and Tailscale. The host timezone is `America/New_York`.
 | Portainer | `compose/portainer/compose.yaml` | Bound to localhost and served by Tailscale |
 | Jellyfin | Homebrew cask plus `config/launchd/com.jack.jellyfin.plist` | Native Apple Silicon service; LAN-only access |
 | Briancraft II | `compose/minecraft/compose.yaml` | Fabric 1.21.1 modpack; persistent world data |
+| Jeopardy | `apps/jeopardy/compose.yaml` | Private-LAN living-room trivia game |
 | Dawarich | `compose/dawarich/compose.yaml` | Self-hosted location history; persistent database and imports |
 | Immich | `compose/immich/compose.yaml` | Local-only photo library; persistent internal database and library mount point |
 | Twitcher poller | `scripts/twitcher/run-twitcher-poller.sh` | Scheduled one-shot ingestion container |
@@ -52,6 +53,7 @@ Inspect a stack:
 
 ```sh
 docker compose -f compose/homepage/compose.yaml ps
+docker compose -f apps/jeopardy/compose.yaml ps
 docker compose -f compose/portainer/compose.yaml ps
 ```
 
@@ -59,6 +61,7 @@ View logs:
 
 ```sh
 docker compose -f compose/homepage/compose.yaml logs
+docker compose -f apps/jeopardy/compose.yaml logs
 docker compose -f compose/portainer/compose.yaml logs
 ```
 

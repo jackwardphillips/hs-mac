@@ -6,6 +6,7 @@ Operations documentation is grouped by service:
   `waxwing:/home/jack/server/docs/changelogs/briancraft.md`
 - [BlueMap](minecraft/BLUEMAP.md)
 - [Twitcher poller](twitcher/README.md)
+- [Jeopardy](../apps/jeopardy/README.md) ([changelog](../apps/jeopardy/CHANGELOG.md))
 - [Personal Observatory](observatory/README.md)
 - [Portainer backups](portainer/BACKUPS.md)
 
