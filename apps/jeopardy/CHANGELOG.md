@@ -1,5 +1,13 @@
 # Jeopardy changelog
 
+## 2026-09-29
+
+- Consolidated the Jeopardy application source, assets, tests, Compose definition,
+  and operations documentation under `apps/jeopardy`. Added the audio and UI
+  flow tests and merged the all-players-wrong regression and answer-timeout
+  assertions into the game tests. This was a source-control organization change;
+  the running service was not redeployed.
+
 ## 2026-09-10
 
 - Fixed a server crash when every eligible player answered a clue incorrectly.
